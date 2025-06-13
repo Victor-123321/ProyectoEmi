@@ -31,7 +31,7 @@ std::vector<Video*> cargarVideos(const std::string& archivoNombre) {
             std::getline(datos, nombreSerie, ',');
             datos >> temporada >> coma >> capitulo;
 
-            std::string idSerie = id.substr(0, id.find('-'));
+            std::string idSerie = id;
             Serie* serieEncontrada = nullptr;
 
             for (Video* video : listaVideos) {
@@ -48,6 +48,7 @@ std::vector<Video*> cargarVideos(const std::string& archivoNombre) {
 
             Capitulo* nuevoCap = new Capitulo(id, duracion, titulo, genero, nombreSerie, temporada, capitulo);
             serieEncontrada->AñadirCapitulo(nuevoCap);
+            listaVideos.push_back(nuevoCap);
         }
     }
     archivo.close();
@@ -164,6 +165,7 @@ int main() {
                 break;
 			case 5: 
                 std::cout << "Saliendo del programa...\n"; 
+                return 0;
                 break;
         default: std::cout << "Opcion no valida.\n";
         }

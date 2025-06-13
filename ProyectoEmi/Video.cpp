@@ -39,10 +39,14 @@ const std::string Video::getNombre() const {
 const std::string Video::getGenero() const {
     return Genero;
 }
+
 const int Video::getDuracion() const {
     return Duracion;
 }
 std::ostream& operator<<(std::ostream& os, const Video& video) {
+    if (video.ID == "20239999-S01E03") {
+        std::cout << "Test";
+    }
     os << video.Mostrar();
     return os;
 }
