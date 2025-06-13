@@ -31,29 +31,32 @@ std::vector<Video*> cargarVideos(const std::string& archivoNombre) {
             std::getline(datos, nombreSerie, ',');
             datos >> temporada >> coma >> capitulo;
 
-            std::string idSerie = id;
             Serie* serieEncontrada = nullptr;
 
             for (Video* video : listaVideos) {
-                if (video->getID() == idSerie) {
-                    serieEncontrada = dynamic_cast<Serie*>(video);
+                Serie* serie = dynamic_cast<Serie*>(video);
+                if (serie && serie->getNombre() == nombreSerie) { 
+                    serieEncontrada = serie;
                     break;
                 }
             }
 
+            // Si no existe, crear una nueva Serie
             if (!serieEncontrada) {
-                serieEncontrada = new Serie(idSerie, 0, nombreSerie, genero);
+                serieEncontrada = new Serie(nombreSerie, 0, nombreSerie, genero);
                 listaVideos.push_back(serieEncontrada);
             }
 
             Capitulo* nuevoCap = new Capitulo(id, duracion, titulo, genero, nombreSerie, temporada, capitulo);
             serieEncontrada->AñadirCapitulo(nuevoCap);
+
             listaVideos.push_back(nuevoCap);
         }
     }
     archivo.close();
     return listaVideos;
 }
+
 
 void mostrarVideos(const std::vector<Video*>& listaVideos) {
     for (const Video* video : listaVideos) {
